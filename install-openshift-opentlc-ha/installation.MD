@@ -23,6 +23,17 @@ ansible-playbook -f 20 openshift-ansible/playbooks/prerequisites.yml
 ansible-playbook -f 20 openshift-ansible/playbooks/deploy_cluster.yml
 ```
 
+## Verify OpenShift Cluster ##
+Once the installation is complete copy the .kube directory from master1 to your bastion. That way you can run oc commands as system:admin on the bastion and don’t have to ssh to a master:
+```
+ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
+```
+
+Verify that you are now system:admin:
+```
+oc whoami
+```
+
 ## Uninstalling OpenShift ##
 
 Run the uninstall playbook:
